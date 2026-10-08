@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HGR Dev CRM — Developer Business CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head><body>
+<aside class="sidebar" id="sidebar">
+<div class="brand"><div class="logo">&lt;/&gt;</div><div>HGR <span style="color:#21d4fd">DEV</span><small style="display:block;color:#66728c;font-size:9px;letter-spacing:1.5px">BUSINESS CRM</small></div></div>
+<div class="nav-label">Workspace</div>
+<a class="nav-link active" data-page="dashboard"><i class="fa-solid fa-grid-2"></i>Dashboard</a>
+<a class="nav-link" data-page="projects"><i class="fa-solid fa-code"></i>Projects</a>
+<a class="nav-link" data-page="clients"><i class="fa-solid fa-users"></i>Clients</a>
+<a class="nav-link" data-page="tasks"><i class="fa-solid fa-list-check"></i>Tasks</a>
+<a class="nav-link" data-page="leads"><i class="fa-solid fa-filter"></i>Leads</a>
+<div class="nav-label">Brand</div>
+<a class="nav-link" data-page="portfolio"><i class="fa-solid fa-briefcase"></i>Public Portfolio</a>
+<a class="nav-link" data-page="reviews"><i class="fa-solid fa-star"></i>Reviews</a>
+<div class="nav-label">System</div>
+<a class="nav-link" id="resetData"><i class="fa-solid fa-rotate-left"></i>Reset Demo Data</a>
+</aside>
+<main class="main">
+<header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="mobile-menu" id="mobileMenu"><i class="fa-solid fa-bars"></i></button><input id="globalSearch" class="search" placeholder="Search projects, clients..."></div><div class="profile"><div><b>Hamza Ghulam Rasool</b><small class="muted" style="display:block;text-align:right">Developer / Admin</small></div><div class="avatar">HG</div></div></header>
+<div class="content">
+<div class="page active" id="page-dashboard">
+<div class="page-head"><div><h1>Business Dashboard</h1><p class="muted">Manage your development business from one place.</p></div><button class="btn btn-primary" onclick="openModal('project')"><i class="fa-solid fa-plus"></i> New Project</button></div>
+<div class="grid stats">
+<div class="card stat"><div class="icon"><i class="fa-solid fa-code"></i></div><h2 id="statProjects">0</h2><div class="muted">Total Projects</div><div class="trend">↑ Growing portfolio</div></div>
+<div class="card stat"><div class="icon"><i class="fa-solid fa-users"></i></div><h2 id="statClients">0</h2><div class="muted">Active Clients</div><div class="trend">↑ Client relationships</div></div>
+<div class="card stat"><div class="icon"><i class="fa-solid fa-chart-line"></i></div><h2 id="statRevenue">Rs. 0</h2><div class="muted">Project Value</div><div class="trend">↑ Pipeline value</div></div>
+<div class="card stat"><div class="icon"><i class="fa-solid fa-list-check"></i></div><h2 id="statTasks">0</h2><div class="muted">Open Tasks</div><div class="trend">Keep moving</div></div>
+</div>
+<div class="grid section-grid" style="margin-top:18px">
+<div class="card"><div class="page-head" style="margin-bottom:10px"><div><h3>Recent Projects</h3><span class="muted">Your latest development work</span></div><button class="btn btn-light" onclick="nav('projects')">View All</button></div><div class="table-wrap"><table class="table"><thead><tr><th>Project</th><th>Technology</th><th>Status</th><th>Value</th><th>Progress</th></tr></thead><tbody id="dashProjects"></tbody></table></div></div>
+<div class="card"><h3>Project Completion</h3><p class="muted">Completed vs total projects</p><div class="progress" style="height:12px;margin:25px 0 10px"><i id="completionBar" style="width:0%"></i></div><b id="completionText">0 of 0 projects completed</b><hr><h5>What this CRM manages</h5><p class="muted small">Projects • Clients • Leads • Tasks • Reviews • Portfolio • Revenue</p></div>
+</div>
+<div style="margin-top:18px"><div class="page-head"><div><h2 style="font-size:21px">Latest Client Reviews</h2></div><button class="btn btn-light" onclick="nav('reviews')">All Reviews</button></div><div class="grid section-grid" id="dashReviews"></div></div>
+</div>
+
+<div class="page" id="page-projects">
+<div class="page-head"><div><h1>Projects</h1><p class="muted">Create, update and monitor every client project.</p></div><button class="btn btn-primary" id="addProject"><i class="fa-solid fa-plus"></i> Add Project</button></div>
+<div class="card" style="margin-bottom:18px"><input id="projectSearch" class="form-control" placeholder="Search project, client or technology..."></div>
+<div class="grid project-grid" id="projectGrid"></div>
+</div>
+
+<div class="page" id="page-clients">
+<div class="page-head"><div><h1>Clients</h1><p class="muted">Manage customer contacts and relationships.</p></div><button class="btn btn-primary" id="addClient"><i class="fa-solid fa-plus"></i> Add Client</button></div>
+<div class="card"><input id="clientSearch" class="form-control" placeholder="Search clients..."><div class="table-wrap" style="margin-top:15px"><table class="table"><thead><tr><th>Name</th><th>Company</th><th>Email</th><th>Phone</th><th>Status</th><th></th></tr></thead><tbody id="clientRows"></tbody></table></div></div>
+</div>
+
+<div class="page" id="page-tasks">
+<div class="page-head"><div><h1>Tasks</h1><p class="muted">Track your development workflow and deadlines.</p></div></div>
+<div class="card"><div class="table-wrap"><table class="table"><thead><tr><th>Task</th><th>Priority</th><th>Due</th><th>Status</th><th>Action</th></tr></thead><tbody id="taskRows"></tbody></table></div></div>
+</div>
+
+<div class="page" id="page-leads">
+<div class="page-head"><div><h1>Sales Leads</h1><p class="muted">Track prospects from first contact to conversion.</p></div></div>
+<div class="card"><div class="table-wrap"><table class="table"><thead><tr><th>Lead</th><th>Source</th><th>Potential Value</th><th>Status</th></tr></thead><tbody id="leadRows"></tbody></table></div></div>
+</div>
+
+<div class="page" id="page-portfolio">
+<div class="page-head"><div><h1>Public Portfolio</h1><p class="muted">A client-facing view of your completed and active work.</p></div></div>
+<div class="landing"><div class="badge b-purple">DEVELOPER • UI/UX • WEB SOLUTIONS</div><h2>Building digital products that help businesses grow.</h2><p>Hamza Ghulam Rasool — professional web development, business websites, e-commerce, dashboards and custom CRM solutions.</p><button class="btn btn-primary" onclick="nav('projects')">Manage Portfolio</button></div>
+<div class="grid counter-grid" style="margin:30px 0"><div class="card counter"><h2 id="portProjects">30+</h2><p>Projects Delivered</p></div><div class="card counter"><h2>25+</h2><p>Happy Clients</p></div><div class="card counter"><h2>4.9/5</h2><p>Average Rating</p></div><div class="card counter"><h2>3+</h2><p>Years Experience</p></div></div>
+<div class="grid project-grid" id="portfolioGrid"></div>
+</div>
+
+<div class="page" id="page-reviews">
+<div class="page-head"><div><h1>Reviews & Ratings</h1><p class="muted">Showcase social proof and monitor customer satisfaction.</p></div><div class="card" style="padding:12px 18px"><b id="avgRating">0.0</b> <span class="stars">★★★★★</span><div class="muted"><span id="reviewCount">0</span> reviews</div></div></div>
+<div class="grid project-grid" id="reviewGrid"></div>
+</div>
+</div></main>
+
+<div class="modal" id="modal"><div class="modal-box"><div class="modal-head"><h3 id="modalTitle">Modal</h3><button class="close" id="closeModal">×</button></div><div id="modalBody"></div></div></div>
+<div class="toast" id="toast">Saved</div>
+<script src="js/data.js"></script><script src="js/app.js"></script>
+</body></html>
